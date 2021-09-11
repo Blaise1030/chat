@@ -28,95 +28,24 @@
         👈🏼 Back
       </div>
     </router-link>
-    <div>Contact Name</div>
+    <div>{{ state.contactName }}</div>
   </div>
-  <div class="overflow-y-scroll h-full" id="chat-scroll">
+  <div class="overflow-y-scroll h-full" id="chat-scroll1">
     <ChatCardComponent
-      :isYou="false"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="true"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="false"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="false"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="false"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="false"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="false"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="false"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="false"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
-    />
-    <ChatCardComponent
-      :isYou="true"
-      otherName="Name"
-      date="2021-3-04"
-      payload="This is my message"
-      type="File"
+      v-for="message in state.chatMessages"
+      :otherName="message.otherName"
+      :payload="message.payload"
+      :isYou="message.isYou"
+      :date="message.date"
+      :type="message.type"
+      :key="message.id"
     />
     <div class="h-10"></div>
     <div class="h-10"></div>
     <div class="h-10"></div>
   </div>
   <div
-    class="
-      sticky
-      bottom-0
-      left-0
-      w-full
-      p-4
-      z-20
-      bg-white
-      border-t-2
-      flex flex-row
-    "
+    class="sticky bottom-0 left-0 w-full p-4 bg-white border-t-2 flex flex-row"
   >
     <div
       class="
@@ -132,25 +61,152 @@
     >
       📷
     </div>
-    <input placeholder="Send A Message" class="outline-none" />
+    <input
+      placeholder="Send A Message"
+      class="outline-none w-full"
+      v-model="state.inputMessage"
+      @change="onEnter"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, reactive } from "vue";
 import ChatCardComponent from "@/modules/chat/components/ChatCard.component.vue";
 
 export default defineComponent({
   components: { ChatCardComponent },
   setup() {
-    onMounted(() => {
-      scrollToBottom();
+    const state = reactive({
+      contactName: "This is the contact name",
+      inputMessage: "",
+      chatMessages: [
+        {
+          id: "1",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "2",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "3",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "4",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "5",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "6",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "7",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "8",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "9",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "10",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "11",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+        {
+          id: "12",
+          isYou: true,
+          otherName: "Name",
+          date: "2021-3-04",
+          payload: "This is my message",
+          type: "File",
+        },
+      ],
     });
-    const scrollToBottom = () => {
-      const chatScroll = document.getElementById("chat-scroll");
-      chatScroll?.scrollTo(0, chatScroll?.scrollHeight || 0);
+    onMounted(() => {
+      scrollToBottom(false);
+    });
+    const scrollToBottom = (animate: boolean) => {
+      const chatScroll1 = document.getElementById("chat-scroll1");
+      animate
+        ? chatScroll1?.scrollBy({
+            top: chatScroll1.scrollHeight,
+            behavior: "smooth",
+          })
+        : chatScroll1?.scrollTo(0, chatScroll1.scrollHeight);
     };
-    return {};
+    const onEnter = () => {
+      scrollToBottom(true);
+      state.chatMessages.push({
+        payload: state.inputMessage,
+        date: "2021-3-04",
+        otherName: "Name",
+        type: "File",
+        isYou: false,
+        id: "3",
+      });
+      state.inputMessage = "";
+    };
+    return {
+      onEnter,
+      state,
+    };
   },
 });
 </script>
