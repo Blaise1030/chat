@@ -1,0 +1,29 @@
+<template>
+  <div
+    class="
+      bg-purple-400
+      h-screen
+      w-screen
+      flex flex-row
+      items-center
+      justify-center
+    "
+  >
+    <div
+      class="
+        sm:w-400
+        sm:h-700
+        bg-gray-50
+        rounded
+        shadow-md
+        overflow-y-hidden
+        border
+        w-screen
+        h-screen
+        relative
+      "
+    >
+      <router-view />
+    </div>
+  </div>
+</template>
