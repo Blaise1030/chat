@@ -30,7 +30,7 @@
     </router-link>
     <div>Contact Name</div>
   </div>
-  <div class="overflow-y-scroll h-full">
+  <div class="overflow-y-scroll h-full" id="chat-scroll">
     <ChatCardComponent
       :isYou="false"
       otherName="Name"
@@ -137,12 +137,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import ChatCardComponent from "@/modules/chat/components/ChatCard.component.vue";
 
 export default defineComponent({
   components: { ChatCardComponent },
   setup() {
+    onMounted(() => {
+      scrollToBottom();
+    });
+    const scrollToBottom = () => {
+      const chatScroll = document.getElementById("chat-scroll");
+      chatScroll?.scrollTo(0, chatScroll?.scrollHeight || 0);
+    };
     return {};
   },
 });
