@@ -1,5 +1,4 @@
 import {createStore} from "vuex";
-import {chatStore} from "@/modules/chat/store";
 import {getCurrentUser, signIn} from "@/api";
 import router from "@/router";
 export const STORE_GET_USER_STREAM = "getuser";
@@ -30,19 +29,14 @@ export default createStore({
   actions: {
     [ACTION_SIGN_IN]: async ({commit}) => {
       await signIn((user: any) => {
-        console.log(user);
         commit(SET_USER, {newUser: user});
         router.push({name: "ChatBox"});
       });
     },
     [ACTION_SIGN_IN_LISTENER]: async ({commit}, {onSuccess}) => {
       const newUser = await getCurrentUser();
-      console.log(newUser);
       commit(SET_USER, {newUser});
       onSuccess();
     },
-  },
-  modules: {
-    chatStore,
   },
 });
