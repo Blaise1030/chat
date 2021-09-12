@@ -30,12 +30,15 @@ export default createStore({
   actions: {
     [ACTION_SIGN_IN]: async ({commit}) => {
       await signIn((user: any) => {
+        console.log(user);
         commit(SET_USER, {newUser: user});
         router.push({name: "ChatBox"});
       });
     },
     [ACTION_SIGN_IN_LISTENER]: async ({commit}, {onSuccess}) => {
-      commit(SET_USER, {newUser: await getCurrentUser()});
+      const newUser = await getCurrentUser();
+      console.log(newUser);
+      commit(SET_USER, {newUser});
       onSuccess();
     },
   },

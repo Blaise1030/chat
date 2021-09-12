@@ -15,7 +15,7 @@ export const signIn = async (
       user_name: signIn.user?.displayName,
     });
   }
-  onSignInSuccess(signIn);
+  onSignInSuccess(signIn.user);
 };
 
 export const signOut = async () => await firebase.auth().signOut();

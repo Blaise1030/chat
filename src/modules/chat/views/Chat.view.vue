@@ -23,23 +23,23 @@
         p-0.5
         px-2
         mr-3
-        cursor:pointer
+        cursor-pointer
       "
     >
       👈🏼 Logout
     </div>
 
-    <div>{{ state.contactName }}</div>
+    <div>Group Chat</div>
   </div>
   <div class="overflow-y-scroll h-full pb-20" id="chat-scroll1">
     <ChatCardComponent
-      v-for="message in state.chatMessages"
-      :otherName="message.otherName"
+      v-for="(message, index) in state.chatMessages"
+      :otherName="message.user_name"
       :payload="message.payload"
       :isYou="message.isYou"
       :date="message.date"
       :type="message.type"
-      :key="message.id"
+      :key="index"
     />
     <div class="h-10"></div>
   </div>
@@ -70,32 +70,44 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from "vue";
+import { computed, defineComponent, onMounted, reactive } from "vue";
 import ChatCardComponent from "@/modules/chat/components/ChatCard.component.vue";
 import { signOut } from "@/api";
 import router from "@/router";
+import { sendMessage } from "../api";
+import store from "@/store";
+import { ACTION_STREAM_CHAT, CHAT_STORE, GET_CHAT_LIST } from "../store";
 
 export default defineComponent({
   components: { ChatCardComponent },
   setup() {
     const state = reactive({
-      contactName: "Group Chat",
       inputMessage: "",
+      chatMessages: computed(
+        () => store.getters[`${CHAT_STORE}${GET_CHAT_LIST}`]
+      ),
     });
     onMounted(() => {
+      store.dispatch(`${CHAT_STORE}${ACTION_STREAM_CHAT}`, {
+        onUIStream: () => scrollToBottom(true),
+      });
       scrollToBottom(false);
     });
     const scrollToBottom = (animate: boolean) => {
       const chatScroll1 = document.getElementById("chat-scroll1");
       animate
-        ? chatScroll1?.scrollBy({
-            top: chatScroll1.scrollHeight,
-            behavior: "smooth",
-          })
-        : chatScroll1?.scrollTo(0, chatScroll1.scrollHeight);
+        ? chatScroll1?.scrollBy({ top: 0, behavior: "smooth" })
+        : chatScroll1?.scrollTo(0, 0);
     };
     const onEnter = () => {
       scrollToBottom(true);
+      const { uid, displayName } = store.state.user as any;
+      console.log(store.state.user);
+      sendMessage({
+        user_name: displayName,
+        payload: state.inputMessage,
+        user_id: uid,
+      });
       state.inputMessage = "";
     };
 
