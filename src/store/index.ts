@@ -1,6 +1,7 @@
 import {createStore} from "vuex";
 import {getCurrentUser, signIn} from "@/api";
 import router from "@/router";
+import {chatStore} from "@/modules/chat/store";
 export const STORE_GET_USER_STREAM = "getuser";
 export const MAIN_STORE = "store/";
 
@@ -38,5 +39,8 @@ export default createStore({
       commit(SET_USER, {newUser});
       onSuccess();
     },
+  },
+  modules: {
+    chatStore,
   },
 });
