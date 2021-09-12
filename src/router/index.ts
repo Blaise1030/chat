@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 import store, {GET_USER} from "@/store";
 const MobileLayout = () => import("@/layouts/Mobile.layout.vue");
-const Chat = () => import("@/modules/chat/views/Chat.view.vue");
+//const Chat = () => import("@/modules/chat/views/Chat.view.vue");
 const LoginPage = () => import("@/views/Login.view.vue");
 
 const routes: Array<RouteRecordRaw> = [
@@ -18,27 +18,27 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-  {
-    path: "/chat",
-    name: "Chat",
-    component: MobileLayout,
-    meta: {
-      requiresAuth: true,
-    },
-    children: [
-      {
-        path: "",
-        redirect: {
-          name: "Chat",
-        },
-      },
-      {
-        path: "box",
-        name: "ChatBox",
-        component: Chat,
-      },
-    ],
-  },
+  // {
+  //   path: "/chat",
+  //   name: "Chat",
+  //   component: MobileLayout,
+  //   meta: {
+  //     requiresAuth: true,
+  //   },
+  //   children: [
+  //     {
+  //       path: "",
+  //       redirect: {
+  //         name: "Chat",
+  //       },
+  //     },
+  //     {
+  //       path: "box",
+  //       name: "ChatBox",
+  //       component: Chat,
+  //     },
+  //   ],
+  // },
 ];
 
 const router = createRouter({
