@@ -14,5 +14,6 @@ export const sendMessage = async ({user_name, user_id, payload}: any) => {
 export const getMessageStream = async (onSnapshot: (a: any[]) => void) => {
   return db
     .collection(MESSAGE)
+    .limit(10)
     .onSnapshot((data) => onSnapshot(data.docs.map((d) => d.data())));
 };
