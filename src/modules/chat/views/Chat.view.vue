@@ -30,7 +30,7 @@
     </router-link>
     <div>{{ state.contactName }}</div>
   </div>
-  <div class="overflow-y-scroll h-full" id="chat-scroll1">
+  <div class="overflow-y-scroll h-full pb-20" id="chat-scroll1">
     <ChatCardComponent
       v-for="message in state.chatMessages"
       :otherName="message.otherName"
@@ -40,8 +40,6 @@
       :type="message.type"
       :key="message.id"
     />
-    <div class="h-10"></div>
-    <div class="h-10"></div>
     <div class="h-10"></div>
   </div>
   <div
