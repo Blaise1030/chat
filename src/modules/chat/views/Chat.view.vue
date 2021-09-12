@@ -13,21 +13,22 @@
       space-center
     "
   >
-    <router-link to="/chat">
-      <div
-        class="
-          duration-500
-          text-gray-400 text-sm
-          hover:bg-gray-200
-          rounded
-          p-0.5
-          px-2
-          mr-3
-        "
-      >
-        👈🏼 Back
-      </div>
-    </router-link>
+    <div
+      @click="logout"
+      class="
+        duration-500
+        text-gray-400 text-sm
+        hover:bg-gray-200
+        rounded
+        p-0.5
+        px-2
+        mr-3
+        cursor:pointer
+      "
+    >
+      👈🏼 Logout
+    </div>
+
     <div>{{ state.contactName }}</div>
   </div>
   <div class="overflow-y-scroll h-full pb-20" id="chat-scroll1">
@@ -71,111 +72,15 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from "vue";
 import ChatCardComponent from "@/modules/chat/components/ChatCard.component.vue";
+import { signOut } from "@/api";
+import router from "@/router";
 
 export default defineComponent({
   components: { ChatCardComponent },
   setup() {
     const state = reactive({
-      contactName: "This is the contact name",
+      contactName: "Group Chat",
       inputMessage: "",
-      chatMessages: [
-        {
-          id: "1",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "2",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "3",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "4",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "5",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "6",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "7",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "8",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "9",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "10",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "11",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-        {
-          id: "12",
-          isYou: true,
-          otherName: "Name",
-          date: "2021-3-04",
-          payload: "This is my message",
-          type: "File",
-        },
-      ],
     });
     onMounted(() => {
       scrollToBottom(false);
@@ -191,19 +96,18 @@ export default defineComponent({
     };
     const onEnter = () => {
       scrollToBottom(true);
-      state.chatMessages.push({
-        payload: state.inputMessage,
-        date: "2021-3-04",
-        otherName: "Name",
-        type: "File",
-        isYou: false,
-        id: "3",
-      });
       state.inputMessage = "";
     };
+
+    const logout = () => {
+      signOut();
+      router.push({ name: "LoginPage" });
+    };
+
     return {
       onEnter,
       state,
+      logout,
     };
   },
 });

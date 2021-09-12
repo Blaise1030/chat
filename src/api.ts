@@ -1,4 +1,7 @@
 import firebase from "firebase";
+import {auth, db} from "./firebase";
+
+const USER = "user";
 
 export const signIn = async (
   onSignInSuccess: (userCredentials: any) => void
@@ -6,18 +9,22 @@ export const signIn = async (
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
   const provider = new firebase.auth.GoogleAuthProvider();
   const signIn = await firebase.auth().signInWithPopup(provider);
+  if (signIn.additionalUserInfo?.isNewUser) {
+    db.collection(USER).doc(signIn.user?.uid).set({
+      user_id: signIn.user?.uid,
+      user_name: signIn.user?.displayName,
+    });
+  }
   onSignInSuccess(signIn);
 };
 
-export const loginStateListener = ({
-  onUserIsSignIn,
-  onUserNotSignedIn,
-}: {
-  onUserIsSignIn: (v: any) => void;
-  onUserNotSignedIn: () => void;
-}) =>
-  firebase
-    .auth()
-    .onAuthStateChanged((user) =>
-      user ? onUserIsSignIn(user) : onUserNotSignedIn()
-    );
+export const signOut = async () => await firebase.auth().signOut();
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      unsubscribe();
+      resolve(user);
+    }, reject);
+  });
+};

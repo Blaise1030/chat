@@ -1,13 +1,17 @@
 import firebase from "firebase";
+import "firebase/analytics";
+import "firebase/firestore";
+import "firebase/storage";
 
 const firebaseConfig = {
-  appId: process.env.VUE_APP_FIREBASE_APP_ID,
-  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
-  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
-  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
-  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID,
-  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.VUE_APP_FIREBASE_FIREBASE_MESSAGING_SENDER_ID,
+  apiKey: "AIzaSyCVBYvKi5BtTthFoDbM5_wXQhyKfXvd6dA",
+  authDomain: "chat-9fb62.firebaseapp.com",
+  databaseURL: "https://chat-9fb62-default-rtdb.firebaseio.com",
+  projectId: "chat-9fb62",
+  storageBucket: "chat-9fb62.appspot.com",
+  messagingSenderId: "257511002542",
+  appId: "1:257511002542:web:97602e0100980d6933b83f",
+  measurementId: "G-5GG5EXFS2W",
 };
 
 const app = firebase.initializeApp(firebaseConfig);
@@ -15,4 +19,4 @@ const rtdb = firebase.database();
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-export {app, rtdb, db, auth};
+export {rtdb, db, auth, firebaseConfig};

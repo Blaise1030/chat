@@ -6,6 +6,7 @@
         Start chatting with friends
       </div>
       <div
+        @click="login"
         class="
           mt-2
           px-5
@@ -25,11 +26,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import router from "@/router";
+import store, { ACTION_SIGN_IN, ACTION_SIGN_IN_LISTENER } from "@/store";
+import { defineComponent, onMounted } from "vue";
 
 export default defineComponent({
   setup() {
-    return {};
+    onMounted(() => {
+      store.dispatch(ACTION_SIGN_IN_LISTENER, {
+        onSuccess: () => router.push({ name: "ChatBox" }),
+      });
+    });
+    const login = () => store.dispatch(ACTION_SIGN_IN);
+    return { login };
   },
 });
 </script>
