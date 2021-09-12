@@ -100,13 +100,12 @@ export default defineComponent({
         : chatScroll1?.scrollTo(0, 0);
     };
     const onEnter = () => {
-      scrollToBottom(true);
       const { uid, displayName } = store.state.user as any;
-      console.log(store.state.user);
       sendMessage({
         user_name: displayName,
         payload: state.inputMessage,
         user_id: uid,
+        type: "text",
       });
       state.inputMessage = "";
     };
